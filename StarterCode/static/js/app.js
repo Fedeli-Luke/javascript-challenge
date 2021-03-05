@@ -3,7 +3,7 @@ var tableData = data;
 
 // YOUR CODE HERE!
 
-// Gather data
+// Variables to gather data
 var tbody = d3.select("#ufo-table > tbody");
 var filter_btn = d3.select("#filter-btn");
 var reset_btn = d3.select("#reset-btn")
@@ -15,11 +15,11 @@ var input_shape = d3.select("#shape");
 
 showData(tableData);
 
-// Button click and reset
+// Button find and reset
 filter_btn.on("click", handelFind);
 reset_btn.on("click", handelReset);
 
-// Dropdown selections
+//Grab data
 
 // Date
 dates = {}
@@ -64,3 +64,51 @@ function showData(dataList){
     })
 }
 
+function handelFind(){
+
+    filtered = tableData.filter(filterDate).filter(filterCountry).filter(filterState).filter(filterCity).filter(filterShape);
+    tbody.text("")
+    showData(filtered);
+}
+
+// Reset table to all data
+function handelReset(){
+    tbody.text("");
+    d3.selectAll(".form-control").property("value", "");
+    showData(tableData);
+}
+
+// Filter on Date
+function filterDate(table){
+    text = input_date.property("value");
+    if ( text == "") return table;  
+    else return table.datetime == text;
+}
+
+// FIlter on COuntry
+function filterCountry(table){
+    text = input_country.property("value");
+    if ( text == "") return table; 
+    else return table.country == text;
+}
+
+//FIlter on State
+function filterState(table){
+    text = input_state.property("value");
+    if ( text == "") return table; 
+    else return table.state == text;
+}
+
+//Filter on City
+function filterCity(table){
+    text = input_city.property("value");
+    if ( text == "") return table; 
+    else return table.city == text;
+}
+
+//Filter on Shape
+function filterShape(table){
+    text = input_shape.property("value");
+    if ( text == "") return table; 
+    else return table.shape == text;
+}
